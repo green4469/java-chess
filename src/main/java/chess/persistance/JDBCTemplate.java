@@ -20,8 +20,8 @@ public class JDBCTemplate {
     }
 
     public void updateQuery(String query, List<String> args) {
-        try (Connection con = Connector.getConnection()) {
-            PreparedStatement pstmt = getPreparedStatement(query, args, con);
+        try (Connection con = Connector.getConnection();
+             PreparedStatement pstmt = getPreparedStatement(query, args, con)) {
             pstmt.executeUpdate();
         } catch (Exception e) {
             throw new DataAccessException(e);
@@ -29,8 +29,8 @@ public class JDBCTemplate {
     }
 
     public List<Map<String, String>> selectQuery(String query, List<String> args) {
-        try (Connection con = Connector.getConnection()) {
-            PreparedStatement pstmt = getPreparedStatement(query, args, con);
+        try (Connection con = Connector.getConnection();
+             PreparedStatement pstmt = getPreparedStatement(query, args, con)) {
             ResultSet rs = pstmt.executeQuery();
 
             if (!rs.next()) {
